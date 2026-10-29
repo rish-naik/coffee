@@ -85,6 +85,24 @@ leaf.jpg: rust (75%)  | heads disagree, check manually: miner 99% (main head 20%
 - The additional-stress list shows the flag probability for other stressors at or above 0.30, along with the main head's own probability for that stressor. These are raw scores, not calibrated probabilities, and not a yes/no.
 - If a flag is at least as confident as the main prediction, the two heads disagree and the leaf should be checked manually.
 
+## Examples
+
+Grad-CAM heatmaps from `predict --heatmap-dir`. Left: the photo. Right: the regions that most increased the score of the named output. These are illustrations on photos from outside BRACOL, not evaluation results.
+
+![Rust leaf with Grad-CAM overlay](docs/example_rust_gradcam.jpg)
+
+The heat falls on the lesions, which is what you want to see.
+
+![Second rust leaf with Grad-CAM overlay](docs/example_rust2_gradcam.jpg)
+
+Coarser: most heat is on the lesion-heavy part of the leaf, but some spills onto the neighboring leaf (the map is only 7x7).
+
+### A failure case
+
+![Miner flag on a rust leaf](docs/limitation_miner_flag_gradcam.jpg)
+
+The main head predicts rust (75%), and the flags head scores miner at 99%. The miner heatmap lands on the rust lesions, not on leaf-miner tracks, and no tracks are visible, so this miner score looks like a false positive. This is why additional stresses are shown as hints and not as results, and why the script reports "heads disagree" when a flag is at least as confident as the main prediction.
+
 ## Limitations
 
 - **Secondary stresses are unreliable.** In cross-validation, detecting a secondary stress had precision about 0.30 and recall about 0.36. Treat the flag line as a hint.
@@ -97,6 +115,7 @@ leaf.jpg: rust (75%)  | heads disagree, check manually: miner 99% (main head 20%
 
 ```
 leaf_classifier.py   training, prediction, evaluation, Grad-CAM
+docs/                example heatmaps used in this README
 requirements.txt
 data/                dataset (not tracked)
 outputs/             trained model and metadata (not tracked)
