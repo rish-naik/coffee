@@ -1,0 +1,26 @@
+# Data (see README for the download link)
+data/
+
+# Trained models and run outputs
+outputs/
+outputs_*/
+*.pt
+
+# Generated results
+heatmaps*/
+check.csv
+images_test/
+*.csv
+
+# Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
